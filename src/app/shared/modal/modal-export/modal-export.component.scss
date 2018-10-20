@@ -1,0 +1,38 @@
+.close-tab{
+    margin-left: 5px;
+    // height: 20px;
+    // width: 20px;
+    padding: 0px;
+    padding-bottom: 2px;
+    border-radius: 8px;
+    border: 0px;
+    text-align: center;
+    font-size: 16;
+    color: #505050;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.modal .fade {
+  overflow: hidden;
+  height: 100%;
+}
+
+.modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.modal-content {
+  margin: 0 auto;
+}
+
+.col-md-offset-3{
+  margin-left: 25%;
+}
+
+.form-group{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}

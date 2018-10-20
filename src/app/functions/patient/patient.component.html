@@ -1,0 +1,153 @@
+<div [@routerTransition]>
+    <ngb-tabset [activeId]="selectedTab">
+        <ngb-tab>
+            <ng-template ngbTabTitle>
+                <span class="tabs-title">Danh sách bệnh nhân</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="row">
+                    <div class="col col-xl-12 col-lg-12">
+                        <form [formGroup]="searchPatientForm" novalidate>
+                            <div class="card mb-3 mt-3">
+                                <!-- <div class="card-header bg-primary" style="color:white;">Tìm kiếm bệnh nhân</div> -->
+                                <div class="card-body">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <div class="form-group">
+                                                    <label for="acc">Acc:</label>
+                                                    <input type="text" class="form-control" formControlName="acc"
+                                                        aria-describedby="Acc" placeholder="" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="patientName">Tên bệnh nhân:</label>
+                                                    <input type="text" class="form-control" formControlName="patientName"
+                                                        aria-describedby="PatientName" placeholder="" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="modality">Modality:</label>
+                                                    <!-- <select class="form-control" id="modalities" formControlName="modalities" multiple>
+                                                        <option *ngFor="let x of modalities" [value]="x.serviceCode">
+                                                            {{x.serviceCode}}
+                                                        </option>
+                                                    </select> -->
+                                                    <!-- <ng-multiselect-dropdown [data]="modalities" formControlName="selectedItems" [settings]="modalitiesSettings" (onSelect)="onItemSelect($event)"
+                                                        (onSelectAll)="onSelectAll($event)">
+                                                    </ng-multiselect-dropdown> -->
+                                                    <ejs-multiselect [dataSource]='modalities' [fields]='fields' [mode]='mode'
+                                                        [selectAllText]='selectAllText' [unSelectAllText]='unSelectAllText'
+                                                        showSelectAll=true [maximumSelectionLength]='maximumSelectionLength'
+                                                        [popupHeight]='popupHeight' formControlName="selectedItems"></ejs-multiselect>
+                                                </div>
+                                            </div>
+                                            <div class=" col-lg-2 tags p-b-2 ">
+                                                <div class="form-group ">
+                                                    <label for="startDate ">Từ ngày:</label>
+                                                    <div class="input-group datepicker-input ">
+                                                        <!-- <input class="form-control " placeholder="yyyy-mm-dd
+                                                        " name="startDate " id="startDate " formControlName="startDate " ngbDatepicker
+                                                            #dFrom="ngbDatepicker " readonly>
+                                                        <button class="input-group-addon " (click)="dFrom.toggle()
+                                                        " type="button ">
+                                                            <i class="far fa-calendar-alt "></i>
+                                                        </button> -->
+                                                        <ejs-datepicker format='dd-MM-yyyy' placeholder=''
+                                                            formControlName="startDate" [max]='maxDate'></ejs-datepicker>
+                                                    </div>
+
+                                                    <!-- <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 search-item ">
+                                                        <ejs-datepicker format='dd-MM-yyyy' placeholder='' [value]=startDate></ejs-datepicker>
+                                                        <ejs-datepicker #date width='100%' placeholder='Journey Date' floatLabelType='Auto' [min]='dateMin' [max]='dateMax' (focus)='showDate()'></ejs-datepicker>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 ">
+                                                <div class="form-group ">
+                                                    <label for="endDate ">Đến ngày:</label>
+                                                    <div class="input-group datepicker-input ">
+                                                        <!-- <input class="form-control " name="endDate " id="endDate
+                                                        " formControlName="endDate " ngbDatepicker #dTo="ngbDatepicker " readonly>
+                                                        <button class="input-group-addon " (click)="dTo.toggle()
+                                                        " type="button ">
+                                                            <i class="far fa-calendar-alt "></i>
+                                                        </button> -->
+                                                        <ejs-datepicker format='dd-MM-yyyy' placeholder=''
+                                                            formControlName="endDate" [max]='maxDate'></ejs-datepicker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 ">
+                                                <div class=" ">
+                                                    <label for=" ">&nbsp;</label>
+                                                    <div class="input-group datepicker-input center ">
+                                                        <button class="btn btn-primary " type="submit" (click)="onSearchPatient()">
+                                                            Tìm kiếm
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="has-error has-feedback " *ngIf="message" style="display:block; color: #ff0000">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mh-12 ">
+                    <div class="col col-xl-12 col-lg-12 ">
+                        <ngx-spinner bdColor="rgba(255, 255, 255, 0.8)" size="medium" color="#007bff" type="ball-clip-rotate"></ngx-spinner>
+                        <!-- <div class="card-header bg-primary " style="color:white; ">Danh sách bệnh nhân</div> -->
+                        <ejs-grid #grid [dataSource]='patientList' class='e-headercelldiv' [toolbar]='toolbar'
+                            [allowPaging]='true' [allowSorting]='true' [pageSettings]='initialPage' [allowResizing]='true'
+                            [allowReordering]='true' (dataBound)='dataBound()'>
+                            <e-columns>
+                                <e-column field='qnuRis_Study.studyAccessionNumber' headerText='Acc' textAlign='Center'
+                                    class='e-headercelldiv' width=50></e-column>
+                                <e-column headerText='Tên bệnh nhân' textAlign='Center' [minWidth]='300'>
+                                    <ng-template #template let-data>
+                                        <div class="patientName">
+                                            <a (click)="onViewDicom($event)">{{data.qnuRis_Study.qnuRis_Patient.patientName}}</a>
+                                        </div>
+                                    </ng-template>
+                                </e-column>
+                                <e-column field='qnuRis_Study.qnuRis_Patient.patientGender' headerText='GT' textAlign='Center'
+                                    width=100> </e-column>
+                                <e-column field='qnuRis_Study.qnuRis_Patient.patientAge' headerText='Tuổi' textAlign='Center'
+                                    width=70></e-column>
+                                <e-column headerText='Ngày chụp' textAlign='Center'>
+                                    <ng-template #template let-data>
+                                        <div class="seriesSeriesDateTime">
+                                            {{data.seriesSeriesDate | date: 'dd/MM/yyyy'}} {{data.seriesSeriesTime}}
+                                        </div>
+                                    </ng-template>
+                                </e-column>
+                                <e-column field='seriesModality' headerText='Modality' textAlign='Center' style='color:#ff0000; '></e-column>
+                                <e-column field='qnuRis_Study.studyReferringPhysiciansName' headerText='Bác sĩ chỉ định'
+                                    textAlign='Center '></e-column>
+                                <e-column field='qnuRis_Study.studyStudyDescription' headerText='Ghi chú' textAlign='Center'></e-column>
+                            </e-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab [attr.id]="tab.id" *ngFor="let tab of tabs">
+
+            <ng-template ngbTabTitle>
+                <span>{{ tab.title }}</span>
+                <button class="tab-button" (click)="onCloseTab(tab, $event)">
+                    <i class="far fa-times-circle"></i>
+                </button>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <app-dicomviewer [PatientToDicom]="Patient"></app-dicomviewer>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

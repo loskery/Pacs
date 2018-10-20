@@ -1,0 +1,138 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Hi there!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-horizontal" style="padding: 0 15px !important">
+      <div class="form-group row">
+        <label for="staticEmail" class="col-sm-3 col-form-label">{{title}}</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="staticEmail" value="email@example.com">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="includeOverflow" ng-model="exportOptions.IncludeOverflowImages" ng-disabled="source.value!='Layout'"
+                class="ng-pristine ng-untouched ng-valid" disabled="disabled">Include Overflow Images</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="format" class="control-label col-md-3">Format:</label>
+        <div class="col-md-9">
+          <select class="form-control ng-pristine ng-untouched ng-valid">
+            <option *ngFor="let service of modalities" [value]="service.id">
+              {{service.serviceCode}}
+            </option>
+          </select>
+          <!-- <select id="formats" class="form-control ng-pristine ng-untouched ng-valid" ng-model="source.selectedFormat"
+            ng-options="format.DisplayName for format in exportFormats" ng-disabled="source.value=='PrintCurrentView'">
+            <option value="0" label="BMP">BMP</option>
+            <option value="1" label="JPG">JPG</option>
+            <option value="2" label="JPG Lossless">JPG Lossless</option>
+            <option value="3" selected="selected" label="PNG">PNG</option>
+            <option value="4" label="TIF">TIF</option>
+            <option value="5" label="CMP">CMP</option>
+            <option value="6" label="PDF">PDF</option>
+            <option value="7" label="DICOM">DICOM</option>
+            <option value="8" label="DICOM Zip">DICOM Zip</option>
+          </select> -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dczPassword" class="control-label col-md-3">Password:</label>
+        <div class="col-md-9">
+          <input type="password" class="form-control ng-pristine ng-untouched ng-valid ng-valid-required" id="dczPassword"
+            ng-class="{'ng-invalid': source.selectedFormat.Format=='DicomZip'}" ng-required="source.selectedFormat.Format=='DicomZip'"
+            ng-disabled="source.selectedFormat.Format!=='DicomZip'" ng-model="exportOptions.DczPassword" disabled="disabled">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="quality" class="control-label col-md-3">Compression:</label>
+        <div class="col-md-9">
+          <select id="quality" class="form-control ng-pristine ng-untouched ng-valid" ng-disabled="source.selectedFormat.Format!='Jpeg' &amp;&amp; source.selectedFormat.Format!='Cmp'"
+            ng-model="exportOptions.ImageCompression" disabled="disabled">
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="" id="createDicomDir" ng-disabled="source.selectedFormat.Format!='DicomGray' &amp;&amp; source.selectedFormat.Format!='DicomZip'"
+                ng-model="exportOptions.CreateDICOMDIR" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Create DICOMDIR
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="preserveBitdepth" value="" checked="" ng-disabled="!source.selectedFormat.Format.PreserveBitdepth"
+                ng-model="exportOptions.CanPreserveBitdepth" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Preserve bitdepth of original
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="reduceToEight" value="option1" checked="" ng-disabled="!source.selectedFormat.Format.ReduceBitdepth"
+                ng-model="exportOptions.ReduceGrayscaleTo8BitsSelected" class="ng-pristine ng-untouched ng-valid"
+                disabled="disabled">
+              Reduce grayscale to 8 BPP
+            </label>
+          </div>
+          <div class="checkbox" style="margin-top: 5px">
+            <label>
+              <input type="checkbox" value="" id="burnAnnotations" ng-disabled="source.value=='PrintCurrentView'"
+                ng-model="exportOptions.BurnAnnotations" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Burn Saved Annotations
+            </label>
+          </div>
+          <div class="checkbox" style="margin-top: 5px">
+            <label>
+              <input type="checkbox" value="" id="anonymize" ng-disabled="source.selectedFormat.Format!='DicomGray' &amp;&amp; source.selectedFormat.Format!='DicomZip'"
+                ng-model="exportOptions.Anonymize" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Anonymize
+            </label>
+          </div>
+          <div class="checkbox" style="margin-top: 5px">
+            <label>
+              <input type="checkbox" value="" id="includeViewer" ng-disabled="source.selectedFormat.Format!='DicomGray' &amp;&amp; source.selectedFormat.Format!='DicomZip'"
+                ng-model="exportOptions.IncludeViewer" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Include Viewer
+            </label>
+          </div>
+          <div class="checkbox" style="margin-top: 5px">
+            <label>
+              <input type="checkbox" value="" id="whiteBackground" ng-disabled="source.selectedFormat.Format!='PDF'"
+                ng-model=" exportoptions.whitebackground" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              White background
+            </label>
+          </div>
+          <div class="checkbox" style="margin-top: 5px">
+            <label>
+              <input type="checkbox" value="" id="patientInfo" ng-disabled="source.selectedFormat.Format!='PDF'"
+                ng-model="exportOptions.PatientInfo" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+              Print patient Info
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- <a class="btn btn-default ng-scope" (click)="close()" translate="DIALOGS_OK" ng-disabled="source.selectedFormat.Format=='DicomZip' &amp;&amp; !passwordValid()">Ok</a> -->
+    <button class="btn btn-outline-primary" (click)="onExport()" translate="DIALOGS_OK">OK</button>
+    <button class="btn btn-outline-danger" (click)="activeModal.close('Modal Close')" translate="DIALOGS_CANCEL">Cancel</button>
+  </div>
+</div>

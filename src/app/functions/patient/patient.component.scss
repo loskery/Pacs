@@ -1,0 +1,49 @@
+:host /deep/ .datepicker-input {
+    .custom-select {
+        width: 50%;
+    }
+}
+
+.tabs-title{
+    font-weight: bold;
+    color: while;
+    font-size: 16;
+    padding-bottom: 2px;
+}
+
+.e-view {
+    content: '\e7e8';
+}
+
+.tab-active{
+    display: none;
+}
+
+.tab-button {
+    margin-left: 5px;
+    // height: 20px;
+    // width: 20px;
+    padding: 0px;
+    padding-bottom: 2px;
+    border-radius: 8px;
+    border: 0px;
+    text-align: center;
+    font-size: 16;
+    color: #505050;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.e-grid .e-gridheader .e-sortfilter .e-headercelldiv,
+.e-grid .e-gridheader .e-stackedheadercelldiv,
+.e-grid .e-gridheader .e-headercell .e-headercelldiv.e-headerchkcelldiv {
+  padding: 0px;
+}
+
+.patientName{
+    color: while;
+    text-decoration: underline;
+}
+
+.patientName:hover{
+    cursor: pointer;
+}

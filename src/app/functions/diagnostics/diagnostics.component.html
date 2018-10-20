@@ -1,0 +1,54 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Quản lý mẫu chẩn đoán'" [icon]="'fa-table'"></app-page-header>
+    <div class="row">
+        <div class="col col-xl-9 e-resizable">
+            <form [formGroup]="templateForm" novalidate>
+                <div class="input-group mb-3 ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Loại mẫu:</span>
+                    </div>
+                    <select name="modalityControl" id="modalityControl" class="col-xl-1" formControlName="modalityControl"
+                        style="color:white">
+                        <option *ngFor="let service of modalities" [value]="service.id">
+                            {{service.serviceCode}}
+                        </option>
+                    </select>
+                    <div class="input-group-prepend ml-1">
+                        <span class="input-group-text" id="basic-addon3">Tên mẫu:</span>
+                    </div>
+                    <input type="text" class="form-control" id="templateName" formControlName="templateName"
+                        aria-describedby="TemplateName" placeholder="" autocomplete="off">
+                </div>
+                <ejs-richtexteditor #toolsRTEDiagnostic [toolbarSettings]='toolsRTE' [minHeight]='200' height='380'
+                    [fontFamily]='fontFamily' [placeholder]='placeholderRTE'>
+                </ejs-richtexteditor>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Kết luận:</span>
+                    </div>
+                    <input type="text" class="form-control" id="concludeTemp" name="concludeTemp" formControlName="concludeTemp"
+                        aria-describedby="ConcludeTemp" placeholder="" autocomplete="off">
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-primary" type="submit" (click)="saveTemplate()">Lưu thông tin</button>
+                    <button class="btn btn-danger ml-3" type="submit" (click)="cancelTemplate()">Hủy</button>
+                </div>
+            </form>
+        </div>
+        <div class="col col-xl-3 e-resizable">
+            <ngx-spinner bdColor="rgba(255, 255, 255, 0.8)" size="medium" color="#007bff" type="ball-clip-rotate"></ngx-spinner>
+            <ejs-grid #gridTemplate [dataSource]='templateList' [searchSettings]='searchOptions' [toolbar]='toolbarOptions'
+                [allowPaging]='false' [pageSettings]='initialPage' height='100%' (rowSelected)='rowSelected($event)'>
+                <e-columns>
+                    <e-column headerText='Danh sách mẫu' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <div class="templateName">
+                                {{data.templateName}}
+                            </div>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
+</div>

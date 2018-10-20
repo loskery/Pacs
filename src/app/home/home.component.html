@@ -1,0 +1,89 @@
+<div class="home-page">
+
+  <!-- <div class="banner" *appShowAuthed="false">
+    <div class="container">
+      <h1 class="logo-font">conduit</h1>
+      <p>A place to share your
+        <i>Angular 2</i> knowledge.</p>
+    </div>
+  </div> -->
+  <div class="nav-tabs">
+
+    <ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" ng-transclude="">
+      <!-- ngRepeat: tab in tabs -->
+
+      <li ng-class="{active: active, disabled: disabled}" class="vbox boxItem ng-isolate-scope active nav-item" ng-repeat="tab in tabs"
+        active="tab.active" disabled="disabled" select="tabSelected(tab)" ng-show="tab.visible">
+        <a class="nav-link ng-binding active" ng-click="select()" tab-heading-transclude="">
+          Search1
+          <button ng-show="tab.canDelete" ng-click="deleteTab(tab.id, $event)" class="tab-button ng-hide">
+            <i class="far fa-times-circle"></i>
+          </button>
+        </a>
+      </li>
+      <!-- end ngRepeat: tab in tabs -->
+
+      <li ng-class="{active: active, disabled: disabled}" class="vbox boxItem ng-isolate-scope active nav-item" ng-repeat="tab in tabs"
+        active="tab.active" disabled="disabled" select="tabSelected(tab)" ng-show="tab.visible">
+        <a class="nav-link ng-binding" ng-click="select()" tab-heading-transclude="">
+          Search2
+          <button ng-show="tab.canDelete" ng-click="deleteTab(tab.id, $event)" class="tab-button ng-hide">
+            <i class="far fa-times-circle"></i>
+          </button>
+        </a>
+      </li>
+      <!-- end ngRepeat: tab in tabs -->
+
+      <li ng-class="{active: active, disabled: disabled}" class="vbox boxItem ng-isolate-scope active nav-item" ng-repeat="tab in tabs"
+        active="tab.active" disabled="disabled" select="tabSelected(tab)" ng-show="tab.visible">
+        <a class="nav-link ng-binding" ng-click="select()" tab-heading-transclude="">
+          Search3
+          <button ng-show="tab.canDelete" ng-click="deleteTab(tab.id, $event)" class="tab-button ng-hide">
+            <i class="far fa-times-circle"></i>
+          </button>
+        </a>
+      </li>
+      <!-- end ngRepeat: tab in tabs -->
+
+      <li class="dropdown pull-right ng-scope nav-item">
+        <a class="dropdown-toggle ng-binding nav-link" href="javascript:void(0)" aria-haspopup="true" aria-expanded="false">
+          guest
+          <b class="caret"></b>
+        </a>
+      </li>
+      <!-- end ngRepeat: tab in tabs -->
+
+    </ul>
+  </div>
+
+  <div class="vbox boxItem tab-content">
+    <div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="FromDate">Từ ngày:</label>
+
+          <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+        </div>
+        <div class="form-group">
+          <label for="ToDate">Đến ngày:</label>
+          <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-default">Tìm kiếm</button>
+      </form>
+    </div>
+    <div v_element_id="240" class="ag-row ag-row-no-focus ag-row-even ag-row-level-0 studyContext ng-scope" row="30" style="top: 750px; height: 25px; width: 964px;">
+      <div v_element_id="241" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="1" style=" left: 0px; width: 35px;">31</div>
+      <div v_element_id="242" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="2" style=" left: 35px; width: 154px;">
+        <a href="javascript:void(0)" ng-click="onViewStudy(data)" title="View Study"> OLOL07292013</a>
+      </div>
+      <div v_element_id="243" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="3" style=" left: 189px; width: 155px;">CLEVELAND,
+        JAMES</div>
+      <div v_element_id="244" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="AccessionNumber" style=" left: 344px; width: 155px;"></div>
+      <div v_element_id="245" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="Date" style=" left: 499px; width: 155px;">07/29/2013
+        01:29:04 PM</div>
+      <div v_element_id="246" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="4" style=" left: 654px; width: 155px;"></div>
+      <div v_element_id="247" class="ag-cell ag-cell-no-focus ag-cell-value" tabindex="-1" colid="Description" style=" left: 809px; width: 155px;"></div>
+    </div>
+
+  </div>
+</div>

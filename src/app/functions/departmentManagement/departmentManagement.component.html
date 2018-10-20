@@ -1,0 +1,193 @@
+<ngx-spinner bdColor="#fff" size="default" color="#fff" type="ball-clip-rotate"></ngx-spinner>
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Quản lý phòng ban'" [icon]="'fa-table'"></app-page-header>
+    <ejs-grid #grid [dataSource]='listDepartment' [toolbar]='toolbar' [editSettings]='editSettings' [allowPaging]='true'
+        [allowSorting]='true' [searchSettings]='searchOptions' (toolbarClick)='open(formAddDepartment, $event)'
+        [pageSettings]='initialPage' (rowSelected)='rowSelected($event)'>
+        <e-columns>
+            <e-column field='id' headerText='Id phòng/ban' textAlign='left' isPrimaryKey='true'></e-column>
+            <e-column field='name' headerText='Tên phòng/ban' textAlign='left'></e-column>
+            <e-column field='type' headerText='Loại' textAlign='left'></e-column>
+            <e-column headerText='Sửa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromEdit)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-pen" style="color: #317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+            <e-column headerText='Xóa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromDelete)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="far fa-trash-alt" style="color:red"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+            <e-column headerText='Nhân viên' width='120'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="GetList(fromUserOfDepartment, $event)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-list-ul" style="color:#317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+            <e-column headerText='Thêm nhân viên' width='160'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="addNhanVien($event)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-arrow-right" style="color: #317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-grid>
+
+
+    <!--  from thêm -->
+    <ng-template #formAddDepartment let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Thêm mới phòng/ban'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitAdd()" [formGroup]="formDepartment">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Tên phòng ban</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                        </div>
+                        <div class="form-group">
+                            <label>Loại </label>
+                            <input type="text" class="form-control" id="type" formControlName="type">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit " class="btn btn-primary" style="margin-top: 0px">Thêm phòng/ban
+                            </button>
+                            <button type="button " class="btn btn-danger" (click)="modal.close('Close')" style="margin-left: 5%; margin-top: 0px">Hủy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+    <!-- form sửa -->
+    <ng-template #fromEdit let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitEdit($event)" [formGroup]="formDepartment">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Id Phòng/ban</label>
+                            <input type="text" class="form-control" readonly="true" id="id" formControlName="id" value='{{department.id}}'
+                                style="background-color:#317ab9; color:white">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tên phòng/ban</label>
+                            <input type="text" class="form-control" id="name" formControlName="name" value='{{department.name}}'>
+                        </div>
+
+                        <div class="form-group">
+                            <label>type</label>
+                            <input type="text" class="form-control" id="type" formControlName="type" value="{{department.type}}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </ng-template>
+
+    <!-- from xóa phòng/ban -->
+    <ng-template #fromDelete let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <label><b>Id phòng/ban </b></label> <br>
+                        <label>{{department.id}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Tên phòng/ban</b></label><br>
+                        <label>{{department.name}}</label>
+                    </div>
+                    <div>
+                        <label><b>Loại </b></label><br>
+                        <label>{{department.type}}</label>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="submitXoa()">Xóa</button>
+                        <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </ng-template>
+
+    <!--from nhân viên phòng ban-->
+    <ng-template #fromUserOfDepartment let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Thông tin nhân viên phòng/ban'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <ejs-grid #grid [dataSource]='listUser' [editSettings]='editSettings' [allowPaging]='true'
+                    [allowSorting]='true' [searchSettings]='searchOptions' (toolbarClick)='open(formAddDepartment, $event)'
+                    [pageSettings]='initialPage' (rowSelected)='rowSelected($event)'>
+                    <e-columns>
+                        <e-column field='userName' headerText='Tên đăng nhập' textAlign='left' isPrimaryKey='true'></e-column>
+                        <e-column field='displayName' headerText='Họ và tên' textAlign='left'></e-column>
+                        <e-column field='phoneNumber' headerText='Số điện thoại' textAlign='left'></e-column>
+                        <e-column field='email' headerText='email' textAlign='left'></e-column>
+                        <e-column headerText='Xóa' width='65'>
+                            <ng-template #template>
+                                <div class="button">
+                                    <button type="button" (click)="deleteUserDepartment($event)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                                        <i class="far fa-trash-alt" style="color:red"></i>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,102 @@
+<div class="modal-content">
+  <!-- <div class="modal-header">
+    <h4 class="modal-title">Chẩn đoán</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <ngb-tabset>
+      <ngb-tab title="Chẩn đoán">
+        <ng-template ngbTabContent>
+          <form [formGroup]="diagnoseForm" novalidate>
+            <div class="form-horizontal" style="padding: 0 15px !important">
+              <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon3">Loại mẫu:</span>
+                </div>
+                <select class="form-control ng-pristine ng-untouched ng-valid" (change)="onChangeTemplates($event.target.value)">
+                  <option *ngFor="let template of templates" [value]="template.id">
+                    {{template.templateName}}
+                  </option>
+                </select>
+              </div>
+              <div class="input-group mt-3 mb-3">
+                <ejs-richtexteditor #toolsRTEModal [toolbarSettings]='toolsRTE' [(value)]='valueRTE' [minHeight]='200'
+                  height='auto' [fontFamily]='fontFamily' [placeholder]='placeholderRTE'>
+                </ejs-richtexteditor>
+              </div>
+              <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon3">Kết luận:</span>
+                </div>
+                <!-- <input type="text" class="form-control" id="conclude" placeholder=""> -->
+                <input type="text" class="form-control" id="concludeTemp" name="concludeTemp" formControlName="concludeTemp"
+                  aria-describedby="ConcludeTemp" placeholder="" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-outline-primary" (click)="onDiagnose()" translate="DIALOGS_OK">Lưu thông tin</button>
+              <button class="btn btn-outline-danger" (click)="activeModal.close('Modal Close')" translate="DIALOGS_CANCEL">Hủy</button>
+            </div>
+          </form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Thông tin bệnh nhân</ng-template>
+        <ng-template ngbTabContent>
+          <div class="form-group row">
+            <label for="patientName" class="col-sm-2 col-form-label">Tên BN:</label>
+            <div class="col-sm-7">
+              <input type="text" readonly class="form-control-plaintext" id="" value="Nguyễn Văn Anh">
+            </div>
+            <div class="col-sm-3">
+              <label for="patientId" class="col-form-label pull-right">BN.123456789.CD002.A1</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="patientName" class="col-sm-2 col-form-label">Ngày sinh:</label>
+            <div class="col-sm-4">
+              <input type="text" readonly class="form-control-plaintext" id="" value="10/10/1010">
+            </div>
+            <div class="col-sm-6">
+              <label for="patientId" class="col-form-label">Giới tính:</label>
+              <label for="patientId" class="col-form-label pl-3">Nam</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="patientAddress" class="col-sm-2 col-form-label">Địa chỉ:</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="" value="............................">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">BS chỉ định:</label>
+            <div class="col-sm-4">
+              <input type="text" readonly class="form-control-plaintext" id="" value="BS.CKII.Nguyễn Văn Anh">
+            </div>
+            <div class="col-sm-6">
+              <label for="" class="col-form-label">Khoa:</label>
+              <label for="" class="col-form-label pl-3">Chẩn đoán hình ảnh</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Chẩn đoán:</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="" value=".....................">
+            </div>
+          </div>
+
+        </ng-template>
+      </ngb-tab>
+      <!-- <ngb-tab class="pull-right">
+        <ng-template ngbTabTitle>X</ng-template>
+        <ng-template ngbTabContent>
+        </ng-template>
+      </ngb-tab> -->
+
+    </ngb-tabset>
+
+  </div>
+</div>

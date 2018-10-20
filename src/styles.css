@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import '../node_modules/@syncfusion/ej2-ng-grids/styles/bootstrap.css';
+@import "../node_modules/@syncfusion/ej2-ng-calendars/styles/bootstrap.css"; */
+@import "./bootstrap-dark.css";
+
+.cornerstone-canvas100
+{
+  width: 100%
+}
+.magnifyTool{
+ border: 4px white solid;
+  box-shadow: 2px 2px 10px #1e1e1e;
+  border-radius: 50%;
+  display: none;
+  cursor: none;
+  z-index: 100;           
+ }
+ 
+ .modal-body{
+  background-color: #585858;
+ }
+ .modal-header{
+  background-color: #585858;
+ }
+ label{
+   color:white;
+ }
+input.form-control{
+   background-color: black;
+   color:white;
+ }
+.btn.btn-default{
+   background-color: black;
+   border-color: white;
+   color: white;
+ }
+.card-body{
+  background-color: black;
+}
+/* .nav-tabs.nav-item.show.nav-link, .nav-tabs.nav-link.active{
+  background-color: black;
+} */
+.nav-link{
+  background-color: black;
+}
+.nav-tabs.nav-link.active{
+  background-color: black;
+}
+span.input-group-text{
+  background-color: black;
+  color: white;
+}
+select{
+  background-color: black;
+}
+.e-richtexteditor.e-rte-content{
+  background: black;
+}
+.e-control.e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  color: white;
+}
+.e-rte-toolbar .e-font-color::before, .e-rte-dropdown-popup .e-font-color::before{
+  color: white;
+}
+.e-rte-toolbar .e-background-color::before, .e-rte-dropdown-popup .e-background-color::before{
+  color:white;
+}
+.e-richtexteditor .e-rte-srctextarea {
+  color: white;
+}
+.e-richtexteditor .e-rte-content, .e-richtexteditor .e-source-content{
+  color: white;
+}
+p{
+  color:white;
+}
+.dropdown-menu-right{
+background-color: black;
+}

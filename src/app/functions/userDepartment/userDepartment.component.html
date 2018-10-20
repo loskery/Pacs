@@ -1,0 +1,26 @@
+<ngx-spinner bdColor="#fff" size="default" color="#fff" type="ball-clip-rotate"></ngx-spinner>
+<div [@routerTransition]>
+
+    <!-- <app-page-header [heading]="'Danh sách nhân viên'" [icon]="'fa-table'"></app-page-header> -->
+    <h2 style="color:#9ccef9"> Thêm người dùng vào phòng {{titleDepartment}}</h2>
+    <a style="float:right" routerLink="/departmentManagement" routerLinkActive="active">Quay lại</a><br>
+    <ejs-grid #grid [dataSource]='listUser' [toolbar]='toolbar' [editSettings]='editSettings' [allowPaging]='true'
+        [allowSorting]='true' [searchSettings]='searchOptions' (toolbarClick)='open(formAddDepartment, $event)'
+        [pageSettings]='initialPage'>
+        <e-columns>
+            <e-column field='userName' headerText='Tên đăng nhập' textAlign='left' isPrimaryKey='true'></e-column>
+            <e-column field='displayName' headerText='Họ và tên' textAlign='left'></e-column>
+            <e-column field='phoneNumber' headerText='Số điện thoại' textAlign='left'></e-column>
+            <e-column field='email' headerText='Email' textAlign='left'></e-column>
+            <e-column headerText='Thêm' width='90'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="buttonAdd($event)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-plus-circle" style="color: #317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-grid>
+</div>

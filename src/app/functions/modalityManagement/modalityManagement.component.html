@@ -1,0 +1,273 @@
+<ngx-spinner bdColor="#fff" size="default" color="#fff" type="ball-clip-rotate"></ngx-spinner>
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Quản lý thiết bị'" [icon]="'fa-table'"></app-page-header>
+    <ejs-grid #grid [dataSource]='listModality' [toolbar]='toolbar' [editSettings]='editSettings' [allowPaging]='true'
+        [allowSorting]='true' [searchSettings]='searchOptions' (toolbarClick)='open(fromAddModality, $event)'
+        [pageSettings]='initialPage' (rowSelected)='rowSelected($event)'>
+        <e-columns>
+            <e-column field='id' headerText='Id thiết bị' textAlign='left' isPrimaryKey='true'></e-column>
+            <e-column field='modality' headerText='Tên thiết bị' textAlign='left'></e-column>
+            <e-column field='manufacture' headerText='Đơn vị sản xuất' textAlign='left'></e-column>
+            <e-column field='serial' headerText='Số seri' textAlign='left'></e-column>
+            <e-column field='model' headerText='Số hiệu phiên bản' textAlign='left'></e-column>
+            <e-column field='isActive' headerText='Trạng thái' textAlign='left'></e-column>
+            <e-column field='ipAddress' headerText='Vị trí' textAlign='left'></e-column>
+            <e-column headerText='Sửa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromEdit)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-pen" style="color: #317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+            <e-column headerText='Xóa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromDelete)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="far fa-trash-alt" style="color:red"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-grid>
+
+
+    <!--  from thêm -->
+    <ng-template #fromAddModality let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Thêm thiết bị'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitAdd()" [formGroup]="formModality" novalidate="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Id thiết bị</label>
+                            <input type="text" class="form-control" readonly="true" id="id" formControlName="id">
+                        </div>
+                        <div class="form-group">
+                            <label>Tên thiết bị</label>
+                            <input type="text" class="form-control" id="formModality" formControlName="modality">
+                        </div>
+                        <div class="form-group">
+                            <label>Đơn vị sản xuất</label>
+                            <input type="text" class="form-control" id="manufacture" formControlName="manufacture">
+                        </div>
+                        <div class="form-group">
+                            <label>Số seri</label>
+                            <input type="text" class="form-control" id="serial" formControlName="serial">
+                        </div>
+                        <div class="form-group">
+                            <label>Số phiên bản</label>
+                            <input type="text" class="form-control" id="model" formControlName="model">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit " class="btn btn-primary" style="margin-top: 0px">Lưu thông tin
+                            </button>
+                            <button type="button " class="btn btn-danger" (click)="modal.close('Close')" style="margin-left: 5%; margin-top: 0px">Hủy
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nhóm *</label>
+                            <input type="text" class="form-control" id="emrGroup" formControlName="emrGroup">
+                        </div>
+                        <div class="form-group">
+                            <label>Loại *</label>
+                            <input type="text" class="form-control" id="emrCapitalType" formControlName="emrCapitalType">
+                        </div>
+                        <div class="form-group">
+                            <label>Tiêu đề *</label>
+                            <input type="text" class="form-control" id="aeTitle" formControlName="aeTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Vị trí</label>
+                            <input type="text" class="form-control" id="ipAddress" formControlName="ipAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng thái</label><br>
+                            <label class="radio-inline"><input type="radio" class="radio" name="isActive" id="isActive"
+                                    (click)="chooseIsActive($event)">Kích
+                                hoạt</label>
+                            <label class="radio-inline"><input type="radio" class="radio" name="isActive" id="disabled"
+                                    (click)="chooseIsActive($event)">Tắt
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+
+    <!-- form sửa -->
+    <ng-template #fromEdit let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitEdit($event)" [formGroup]="formModality">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Id thiết bị</label>
+                            <input type="text" class="form-control" id="id" readonly="true" formControlName="id" value="{{modality.id}}"
+                                style="background-color:#317ab9; color:white">
+                        </div>
+                        <div class="form-group">
+                            <label>Tên thiết bị</label>
+                            <input type="text" class="form-control" readonly="true" id="modality" formControlName="modality"
+                                value='{{modality.modality}}' style="background-color:#317ab9; color:white">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Đơn vị sản xuất</label>
+                            <input type="text" class="form-control" id="manufacture" formControlName="manufacture"
+                                value='{{modality.manufacture}}'>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Số seri</label>
+                            <input type="email" class="form-control" id="serial" formControlName="serial" value="{{modality.serial}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Số phiên bản</label>
+                            <input type="text" class="form-control" id="model" formControlName="model" value='{{modality.model}}'>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Nhóm</label>
+                            <input type="text" class="form-control" id="emrGroup" formControlName="emrGroup" value='{{modality.emrGroup}}'>
+                        </div>
+                        <div class="form-group">
+                            <label>Loại</label>
+                            <input type="text" class="form-control" id="emrCapitalType" formControlName="emrCapitalType"
+                                value='{{modality.emrCapitalType}}'>
+                        </div>
+                        <div class="form-group">
+                            <label>Tiêu đề</label>
+                            <input type="text" class="form-control" id="aeTitle" formControlName="aeTitle" value='{{modality.aeTitle}}'>
+                        </div>
+                        <div class="form-group">
+                            <label>Vị trí</label>
+                            <input type="text" class="form-control" id="ipAddress" formControlName="ipAddress" value='{{modality.ipAddress}}'>
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng thái</label><br>
+                            <label class="radio-inline">
+                                <input type="radio" class="radio" name="isActive" id="isActive" [checked]="checkActive"
+                                    id="isActive">Kích
+                                hoạt
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" class="radio" name="isActive" id="disabled" [checked]="!checkActive"
+                                    id="disabled">Tắt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+
+    <!-- from xóa người dùng -->
+    <ng-template #fromDelete let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-5">
+                    <div>
+                        <label><b>Id thiết bị </b></label> <br>
+                        <label>{{modality.id}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Tên thiết bị</b></label><br>
+                        <label>{{modality.modality}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Đơn vị sản xuất</b></label><br>
+                        <label>{{modality.manufacture}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Số seri</b></label><br>
+                        <label>{{modality.serial}}</label>
+                    </div>
+                    <div>
+                        <label><b>Số phiên bản</b></label><br>
+                        <label>{{modality.model}}</label>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="submitXoa()">Xóa</button>
+                        <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                        </button>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+
+                    <div>
+                        <label><b>Nhóm</b></label><br>
+                        <label>{{modality.emrGroup}}</label>
+                    </div>
+                    <div>
+                        <label><b>Loại</b></label><br>
+                        <label>{{modality.emrCapitalType}}</label>
+                    </div>
+                    <div>
+                        <label><b>Tiêu đề</b></label><br>
+                        <label>{{modality.aeTitle}}</label>
+                    </div>
+                    <div>
+                        <label><b>Vị trí</b></label><br>
+                        <label>{{modality.ipAddress}}</label>
+                    </div>
+
+                    <div>
+                        <label>Trạng thái</label><br>
+                        <label class="radio-inline"><input type="radio" class="radio" name="isActive" [checked]="checkActive"
+                                (click)="chooseIsActive($event)" id="isActive">Kích
+                            hoạt</label>
+                        <label class="radio-inline"><input type="radio" class="radio" name="isActive" [checked]="!checkActive"
+                                (click)="chooseIsActive($event)" id="disabled">Tắt
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-template>
+</div>

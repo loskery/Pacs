@@ -1,0 +1,276 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<div style="width: 100%; height:100%">
+    <div id="ToolBar" style="background-color:black">
+        <ul class="nav nav-pills" style="color:#9ccef9">
+            <li class="nav-item">
+                <button id="enableWindowLevelTool" class="btn btn-dark " type="button" data-toggle="tooltip" title="WW/WC"><i
+                        class="fa fa-sun-o fa-lg"></i><br>WW/WC</button>
+            </li>
+            <li class="nav-item">
+                <button id="pan" class="btn btn-dark" type="button" data-toggle="tooltip" title="Pan"><i class="fa fa-arrows fa-lg"></i><br>
+                    Pan </button>
+            </li>
+            <li class="nav-item">
+                <button id="zoom" class="btn btn-dark" type="button" data-toggle="tooltip" title="Zoom"><i class="fas fa-search-plus fa-lg"></i><br>Zoom</button>
+            </li>
+            <li class="nav-item">
+                <button id="enableLength" class="btn btn-dark" type="button" data-toggle="tooltip" title="Length"><i
+                        class="fas fa-arrows-alt-v fa-lg"></i><br>Length
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="probe" class="btn btn-dark" type="button" data-toggle="tooltip" title="Probe"><i class="far fa-dot-circle fa-lg"></i><br>Probe
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="circleroi" class="btn btn-dark" type="button" data-toggle="tooltip" title="Elliptical ROI"><i
+                        class="far fa-circle fa-lg"></i><br>Circleroi
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="rectangleroi" class="btn btn-dark" type="button" data-toggle="tooltip" title="Rectangle ROI"><i
+                        class="far fa-square fa-lg"></i><br>Rectangle Roi</button>
+            </li>
+            <li class="nav-item">
+                <button id="angle" class="btn btn-dark" type="button" data-toggle="tooltip" title="angle"><i class="fas fa-angle-left fa-lg"></i><br>Angle
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="highlight" class="btn btn-dark" type="button" data-toggle="tooltip" title="Highlight"><i
+                        class="fa fa-eye fa-lg"> </i><br> Highlight
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="freehand" class="btn btn-dark" type="button" data-toggle="tooltip" title="Freeform ROI"><i
+                        class="fas fa-directions fa-lg"></i><br>Freehand</button>
+            </li>
+            <li class="nav-item">
+                <button id="magnification" class="btn btn-dark" type="button" data-toggle="tooltip" title="Magnification"><i
+                        class="fas fa-search fa-lg"></i><br>Magnification
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="eraser" class="btn btn-dark" type="button" data-toggle="tooltip" title="Eraser"><i class="fas fa-eraser fa-lg"></i><br>Eraser
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="saveImage" class="btn btn-dark" type="button" data-toggle="tooltip" title="Save"><i class="far fa-save fa-lg"></i><br>SaveImage
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="playClip" class="btn btn-dark" type="button" data-toggle="tooltip" title="Play"><i class="fas fa-play fa-lg"></i><br>Play
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="stopClip" class="btn btn-dark" type="button" data-toggle="tooltip" title="Stop"><i class="fas fa-stop fa-lg"></i><br>Stop
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="annotate" class="btn btn-dark" type="button" data-toggle="tooltip" title="Annotate"><i
+                        class="fas fa-pen-square fa-lg"></i><br>Annotate</button>
+            </li>
+            <li class="nav-item">
+                <button id="next" class="btn btn-dark" type="button" data-toggle="tooltip" title="Next"><i class="fas fa-forward fa-lg"></i><br>Next
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="previous" class="btn btn-dark" type="button" data-toggle="tooltip" title="Previous"><i
+                        class="fas fa-backward fa-lg"></i><br>Previous
+                </button>
+            </li>
+            <li class="nav-item  ">
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        title="Layout" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-table fa-lg"></i><br>Layout
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" (click)="layoutClick(2)">1x2</button>
+                        <button class="dropdown-item" (click)="layoutClick(4)">2x2</button>
+                        <button class="dropdown-item" (click)="layoutClick(6)">3x3</button>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <button id="diagnose" class="btn btn-dark" type="button" data-toggle="tooltip" title="Diagnose" (click)="open(fromDiagnoseModal)"><i
+                        class="fab fa-wpforms fa-lg"></i><br>Diagnose
+                </button>
+            </li>
+            <li class="nav-item">
+                <button id="mpr" class="btn btn-dark" type="button" data-toggle="tooltip" title="Mpr"><i class="far fa-save fa-lg"></i>
+                    <br>Mpr</button>
+            </li>
+            <li class="nav-item">
+                <button id="3d" class="btn btn-dark" type="button" data-toggle="tooltip" title="3D"><i class="fas fa-square fa-lg"></i><br>3D
+                </button>
+            </li>
+            <li class="nav-item dropdown">
+                <button class="btn btn-dark" data-toggle="dropdown" title="More"><i class="fas fa-ellipsis-h fa-lg"></i><br>More
+                </button>
+                <div class="dropdown-menu">
+                    <button id="x256" class="dropdown-item">256x256</button>
+                    <button id="x512" class="dropdown-item">512x512</button>
+                    <button id="invert" class="dropdown-item">Toggle Invert</button>
+                    <button id="interpolation" class="dropdown-item">Toggle Interpolation</button>
+                    <button id="hflip" class="dropdown-item">Horizontal Flip</button>
+                    <button id="vflip" class="dropdown-item">Vertical Flip</button>
+                    <button id="rotate" class="dropdown-item">Rotate 90</button>
+                    <button id="reset" class="dropdown-item">Reset</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- The Modal -->
+    <div style="display: none; position: absolute; z-index: 100; background-color: white; width: 250px;" id="magnificationdiv">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Magnification Tool</h4>
+            <button type="button" class="close closemagnification" data-dismiss="modal">×</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div>
+                <label for="magLevelRange">Magnification Level</label>
+                <input id="magLevelRange" type="range" min="1" value="2" max="10" />
+                <br />
+                <label for="magSizeRange">Magnifying glass size</label>
+                <input id="magSizeRange" type="range" min="100" value="225" max="300" step="25" />
+            </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger closemagnification" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+
+    <div style="display: none; position: absolute; z-index: 200; background-color: white; width: 250px;" id="scrollimagediv">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Magnification Tool</h4>
+            <button type="button" class="close closemagnification" data-dismiss="modal">×</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div>
+                <label for="magLevelRange">Magnification Level</label>
+                <input id="magLevelRange" type="range" min="1" value="2" max="10" />
+                <br />
+                <label for="magSizeRange">Magnifying glass size</label>
+                <input id="magSizeRange" type="range" min="100" value="225" max="300" step="25" />
+            </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger closemagnification" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table id="tableTest" class="table table-dark table-bordered " style="height:-webkit-fill-available; table-layout: fixed;">
+            <tr *ngFor="let item of row">
+                <td *ngFor="let i of column">
+                    <div class="image-canvas-wrapper " oncontextmenu="return false " unselectable='on' onselectstart='return false;'
+                        onmousedown='return false;'>
+                        <div class="image-canvas-{{i}}" oncontextmenu="return false "></div>
+                        <div id="mrtopleft" style="position: absolute;top:3px; left:3px; color:#9ccef9">
+                            Patient Name
+                        </div>
+                        <div id="mrtopright" style="position: absolute;top:3px; right:3px; color:#9ccef9">
+                            Hospital
+                        </div>
+                        <div id="mrbottomright" style="position: absolute;bottom:3px; right:3px; color:#9ccef9">
+                            Zoom:
+                        </div>
+                        <div id="mrbottomleft" style="position: absolute;bottom:3px; left:3px; color:#9ccef9">
+                            WW/WC:
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <template>
+
+        </template>
+    </div>
+    <!-- <app-viewport></app-viewport> -->
+
+
+    <!-- form diagnose -->
+    <ng-template #fromDiagnoseModal let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Phiếu chẩn đoán'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="fromDiagnose">
+                        <table>
+                            <tr>
+                                <td><label>Họ và tên:&nbsp; </label> {{patientName}}</td>
+                                <td> <label>Tuổi:&nbsp; </label> {{patientAge}} </td>
+                                <td style="width:16%;"><label> giới tính: &nbsp;</label> {{patientSex}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"> <label>Địa chỉ:&nbsp; </label> {{patientAddress}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>Bác sĩ chỉ định: &nbsp;</label>{{doctor}} </td>
+                                <td colspan="2"><label>Khoa:&nbsp; </label>{{department}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"> <label>Chẩn đoán:&nbsp; </label> {{diagnose}}</td>
+                            </tr>
+                        </table>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3" style="background-color:#585858;">Tên
+                                    mẫu:</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="template" name="concludeTemp"
+                                aria-describedby="ConcludeTemp" placeholder="" autocomplete="off" style="background-color:#585858; color:white">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <ejs-richtexteditor #toolsRTEDiagnostic [toolbarSettings]='toolsRTE'></ejs-richtexteditor>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3" style="background-color:#585858;">Kết
+                                    luận:</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="result" name="concludeTemp"
+                                aria-describedby="ConcludeTemp" placeholder="" autocomplete="off" style="background-color:#585858; color:white">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3" style="background-color:#585858;">Đề
+                                    nghị:</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="suggest" name="concludeTemp"
+                                aria-describedby="ConcludeTemp" placeholder="" autocomplete="off" style="background-color:#585858; color:white">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-primary" type="submit" (click)="saveDiagnose()">Lưu thông tin</button>
+                            <button class="btn btn-danger ml-3" type="button" (click)="modal.dismiss('Cross click')">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

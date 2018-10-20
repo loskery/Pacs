@@ -1,0 +1,27 @@
+/* button {
+    margin: 25px 5px 20px 20px;
+  } */
+  
+  #loader {
+    color: #008cff;
+    height: 40px;
+    width: 30%;
+    position: absolute;
+    font-family:  'Helvetica Neue','calibiri';
+    font-size:16px;
+    top: 45%;
+    left: 45%;
+  }
+.button{
+    background-color: #fff;
+    border-color: #ccc;
+    box-shadow: none;
+    color: #333;
+    margin: 0 3.5px;
+    display: inline-block;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+    font-size: 14px;
+    font-weight: 400;
+
+}
+  

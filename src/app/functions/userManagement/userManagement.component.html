@@ -1,0 +1,236 @@
+<ngx-spinner bdColor="#fff" size="default" color="#fff" type="ball-clip-rotate"></ngx-spinner>
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Quản lý người dùng'" [icon]="'fa-table'"></app-page-header>
+    <ejs-grid #grid [dataSource]='listUser' [toolbar]='toolbar' [editSettings]='editSettings' [allowPaging]='true'
+        [allowSorting]='true' [searchSettings]='searchOptions' (toolbarClick)='open(formAddUser, $event)'
+        [pageSettings]='initialPage' (rowSelected)='rowSelected($event)'>
+
+        <e-columns>
+            <e-column field='userName' headerText='Tên đăng nhập' textAlign='left' isPrimaryKey='true'></e-column>
+            <e-column field='displayName' headerText='Họ và tên' textAlign='left'></e-column>
+            <e-column field='phoneNumber' headerText='Số điện thoại' textAlign='left'></e-column>
+            <e-column field='email' headerText='email' textAlign='left'></e-column>
+            <e-column headerText='Sửa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromEdit)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="fas fa-pen" style="color: #317ab9"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+            <e-column headerText='Xóa' width='65'>
+                <ng-template #template>
+                    <div class="button">
+                        <button type="button" (click)="open2(fromDelete)" class="e-control e-btn e-flat e-icon-btn e-edit-delete e-editbutton">
+                            <i class="far fa-trash-alt" style="color:red"></i>
+                        </button>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-grid>
+
+
+    <!--  from thêm -->
+    <ng-template #formAddUser let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Thêm người dùng mới'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitAdd()" [formGroup]="formUser" novalidate="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tên đăng nhập</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                            <span class="text text-danger" *ngIf="formUser.controls.userName.touched && formUser.controls.userName.errors?.required">
+                                Tên đăng nhập không để trống </span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu</label>
+                            <input type="password" class="form-control" id="password" formControlName="password">
+                            <span class="text text-danger" *ngIf="formUser.controls.password.errors?.minlength && formUser.controls.password.touched">
+                                Mật khẩu tối thiểu 8 ký tự</span>
+                            <!-- <span class="text text-danger" *ngIf="formUser.controls.password.touched">
+                      Vui lòng nhập mật khẩu</span> -->
+                        </div>
+                        <div class="form-group">
+                            <label>Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+                            <span class="text text-danger" *ngIf="formUser.controls.confirmPassword.dirty && (formUser.value.password != formUser.value.confirmPassword)">
+                                Mật khẩu không khớp</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email">
+                            <span class="text text-danger" *ngIf="formUser.controls.email.dirty && formUser.controls.email.errors?.pattern">
+                                Email không hợp lệ</span>
+                            <span class="text text-danger" *ngIf="formUser.controls.email.dirty && formUser.controls.email.errors?.required">
+                                Vui lòng nhập email</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+                            <span class="text text-danger" *ngIf="formUser.controls.phoneNumber.dirty && (formUser.controls.phoneNumber.errors?.minLength || formUser.controls.phoneNumber.errors?.maxLength)">
+                                số điện thoại không hợp lệ</span>
+                        </div>
+                        <div class="form-group">
+                            <button [disabled]="formUser.invalid" type="submit " class="btn btn-primary" style="margin-top: 0px">Lưu
+                                thông tin
+                            </button>
+                            <button type="button " class="btn btn-danger" (click)="modal.close('Close')" style="margin-left: 5%; margin-top: 0px">Hủy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tên người dùng</label>
+                            <input type="text" class="form-control" id="displayName" formControlName="displayName">
+                        </div>
+
+                        <label>Chức năng</label>
+                        <div class="form-group">
+                            <ul *ngFor="let item of listRole" formGroupName="roles" style="list-style: none">
+                                <li class="checkbox ">
+                                    <label>
+                                        <input type="checkbox" value="{{item.name}}" name="{{item.name}}"
+                                            formControlName="name" (change)="chooseRoles($event)" style="margin-right: 12px">{{item.displayName}}
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+
+    <!-- form sửa -->
+    <ng-template #fromEdit let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="submitEdit($event)" [formGroup]="formUser">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Tên đăng nhập</label>
+                            <input type="text" class="form-control" readonly="true" id="userName" formControlName="userName"
+                                value='{{nguoiDung.userName}}' style="background-color:#317ab9; color:white">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tên người dùng</label>
+                            <input type="text" class="form-control" id="displayName" formControlName="displayName"
+                                value='{{nguoiDung.displayName}}'>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email" value="{{nguoiDung.email}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                                value='{{nguoiDung.phoneNumber}}'>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5">
+                        <label>Chức năng</label>
+                        <div class="form-group">
+                            <ul *ngFor="let item of listRole" style="list-style: none" formGroupName="roles">
+                                <li class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="{{item.name}}" name="{{item.name}}"
+                                            formControlName="name" [checked]="item.isChecked" (change)="chageRole($event)"
+                                            style="margin-right: 12px">{{item.displayName}}
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+
+    <!-- from xóa người dùng -->
+    <ng-template #fromDelete let-modal>
+        <div class="modal-header">
+            <app-page-header [heading]="'Chỉnh sửa thông tin người dùng'" [icon]="'fa-table'"></app-page-header>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-5">
+                    <div>
+                        <label><b>Tên đăng nhập </b></label> <br>
+                        <label>{{nguoiDung.userName}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Tên người dùng</b></label><br>
+                        <label>{{nguoiDung.displayName}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Email</b></label><br>
+                        <label>{{nguoiDung.email}}</label>
+                    </div>
+
+                    <div>
+                        <label><b>Số điện thoại</b></label><br>
+                        <label>{{nguoiDung.phoneNumber}}</label>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="submitXoa()">Xóa</button>
+                        <button type="button" class="btn btn-danger" (click)="modal.close('Close')" style="margin-left:10%">Hủy
+                        </button>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <label>Chức năng</label>
+                    <div>
+                        <ul *ngFor="let item of listRole" style="list-style: none">
+                            <li class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="{{item.name}}" name="{{item.name}}" [checked]="item.isChecked"
+                                        style="margin-right: 12px" disabled="disabled">{{item.displayName}}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-template>
+</div>

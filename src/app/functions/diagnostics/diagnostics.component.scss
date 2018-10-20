@@ -1,0 +1,24 @@
+.e-resizable {
+    resize: both;
+    overflow: auto;
+    // border: 1px solid red;
+    // padding: 10px;
+    height: 550px;
+    min-height: 300px;
+    // min-width: 250px;
+    // position: relative;
+}
+
+.templateName{
+    text-align: left;
+}
+
+.e-richtexteditor .rte-placeholder {
+    /* placeholder style */
+    font-family: monospace;
+    color: white;
+    
+}
+.e-richtexteditor .e-rte-content{
+    background-color: black;
+}
